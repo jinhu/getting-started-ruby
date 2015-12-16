@@ -23,6 +23,7 @@ A. Command line
 
     $ gsutil mb gs://<bucket>
     $ gsutil defacl set public-read gs://<bucket>
+## Datastore
 
 B. Web UI
 
@@ -39,7 +40,7 @@ B. Web UI
 
 Open `config/application.rb`, edit the below line to replace `bucket`
 with the name of your bucket:
-
+    
     config.x.fog_dir = 'bucket'
 
 #### Setup your cloud storage secrets
@@ -74,6 +75,7 @@ To create the database and run migrations to create the required tables, run:
 
 Then, run the Rails web server:
 
+<<<<<<< HEAD
     $ rails server
 
 ### To run the tests
@@ -85,6 +87,15 @@ Then, run the Rails web server:
 ### To deploy to App Engine Managed VMs
 
     $ gcloud preview app deploy app.yaml --promote
+=======
+    $ gcloud preview app deploy app.yaml --promote
+
+[ror]: http://rubyonrails.org/
+[mvms]: https://cloud.google.com/appengine/docs/managed-vms/
+[Installing Ruby]: https://www.ruby-lang.org/en/documentation/installation/
+[Ruby website]: https://www.ruby-lang.org
+[user-install]: http://guides.rubygems.org/faqs/#user-install
+>>>>>>> 2-cloud-datastore
 
 ## Contributing changes
 

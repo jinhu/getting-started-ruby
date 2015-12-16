@@ -22,10 +22,8 @@
     <% end %>
   </div>
 <% end %>
-
 <!-- [START multipart] -->
 <%= form_for @book, :html => { :multipart => true } do |f| %>
-<!-- [END multipart] -->
   <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title %>
@@ -50,3 +48,4 @@
   <!-- [END cover_image] -->
   <button class="btn btn-success" type="submit">Save</button>
 <% end %>
+    <!-- [END multipart] -->

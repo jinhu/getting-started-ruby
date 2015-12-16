@@ -3,9 +3,16 @@ default: &default
     bucket: geekcredpunts
     access_key_id: GOOGQNPR7P7WTOKKYZVZ
     secret_access_key: SqYpCOu4THp7EeCnFAErg9fl5Qby7FOkut5XRJxe
+  project_id: geekcredpunts
+  oauth2:
+    client_id: 730764391901-ads1t3f5kq3cq5h1gn728i064j00kihk.apps.googleusercontent.com
+    client_secret: B9aahVwxMA-VvqMqsJnANHvf
 
 development:
   <<: *default
 
 production:
+  <<: *default
+
+test:
   <<: *default
