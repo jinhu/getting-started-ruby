@@ -16,7 +16,7 @@ require "gcloud/datastore"
 # [START book]
 class Book
 
-  attr_accessor :cover_image, :id, :title, :author, :published_on, :description
+  attr_accessor :cover_image, :image_url, :id, :title, :author, :published_on, :description
   # Return a Gcloud::Datastore::Dataset for the configured dataset.
   # The dataset is used to create, read, update, and delete entity objects.
   def self.dataset
@@ -78,10 +78,10 @@ class Book
   # @return true if valid and saved successfully, otherwise false.
   def save
     if valid?
+      upload_image if cover_image
       entity = to_entity
       Book.dataset.save entity
       self.id = entity.key.id
-      upload_image if cover_image
 
       true
     else
@@ -99,6 +99,7 @@ class Book
     entity["author"]       = author       if author
     entity["published_on"] = published_on if published_on
     entity["description"]  = description  if description
+    entity["image_url"]    = image_url    if image_url
     entity
   end
   # [END to_entity]
@@ -149,7 +150,7 @@ class Book
 
     image.save
 
-    update_columns image_url: image.public_url
+     image_url= image.public_url
   end
   # [END upload]
 

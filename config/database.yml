@@ -43,7 +43,7 @@ test:
   database: db/test.sqlite3
 
 development:
-  dataset_id: gcd_test_dataset_directory
+  dataset_id: geekcredpunts
   host: http://localhost:8080/
   adapter: sqlite3
   pool: 5
