@@ -1,0 +1,11 @@
+default: &default
+  cloud_storage:
+    bucket: geekcredpunts
+    access_key_id: GOOGQNPR7P7WTOKKYZVZ
+    secret_access_key: SqYpCOu4THp7EeCnFAErg9fl5Qby7FOkut5XRJxe
+
+development:
+  <<: *default
+
+production:
+  <<: *default
