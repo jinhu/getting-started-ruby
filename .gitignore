@@ -20,3 +20,5 @@ config/settings.yml
 *.sqlite3
 /config/database.yml
 /gcd_dataset_directory/
+.idea
+.DS_Store
