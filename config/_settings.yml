@@ -1,0 +1,14 @@
+default: &default
+  oauth2:
+    client_id: 697023923734-8hq7mhi9ho5a3giub40e4c3h9p36elq6.apps.googleusercontent.com
+    client_secret: CschSxV7f7NyZIBGr4eu8twG
+  cloud_storage:
+    bucket: geekcredpunts
+    access_key_id: GOOGQNPR7P7WTOKKYZVZ
+    secret_access_key: SqYpCOu4THp7EeCnFAErg9fl5Qby7FOkut5XRJxe
+
+development:
+  <<: *default
+
+production:
+  <<: *default
