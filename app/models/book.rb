@@ -17,7 +17,7 @@ class Book
   include ActiveModel::Model
   include ActiveModel::Validations
 
-  attr_accessor :id, :title, :author, :published_on, :description, :image_url,
+  attr_accessor :id, :title, :author, :points, :published_on, :description, :image_url,
                 :cover_image, :creator_id
 
 
