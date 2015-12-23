@@ -30,7 +30,11 @@
           <div class="navbar-brand">Geekboard</div>
         </div>
         <ul class="nav navbar-nav">
-          <li><%= link_to "Books", root_path %></li>
+          <li><%= link_to "Books",  books_path %></li>
+          <li><%= link_to "Movies", movies_path %></li>
+          <li><%= link_to "Games", games_path %></li>
+          <li><%= link_to "Series", series_index_path %></li>
+          <li><%= link_to "Activities", activities_path %></li>
           <%# [START mine] %>
           <% if logged_in? %>
             <li><%= link_to "Mine", user_books_path %></li>

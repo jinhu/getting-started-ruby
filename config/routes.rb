@@ -13,7 +13,7 @@
 
 Rails.application.routes.draw do
 
-  resources :books, :games, :series, :movies, :activities
+  resources :books, :games, :series, :movies, :activities, :dashboard
 
   # [START login]
   get "/login", to: redirect("/auth/google_oauth2")
@@ -33,6 +33,6 @@ Rails.application.routes.draw do
   get "/logout", to: "sessions#destroy"
   # [END logout]
 
-  root "books#index"
+  root "dashboard#index"
 
 end

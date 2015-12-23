@@ -6,18 +6,20 @@
   <span>Add Game</span>
 <% end %>
 
-<% @items.each do |game| %>
+<% @items.each do |item| %>
+    <%if item.id %>
   <div class="book media">
-    <%= link_to book_path(game) do %>
+    <%= link_to series_path(item) do %>
       <div class="media-left">
-        <img src="<%= game.image_url %>">
+        <img src="<%= item.image_url %>">
       </div>
       <div class="media-body">
-        <h4><%= game.title %></h4>
-        <p><%= game.author %></p>
+        <h4><%= item.title %></h4>
+        <p><%= item.author %></p>
       </div>
     <% end %>
   </div>
+    <% end %>
 <% end %>
 
 <%= render "pagination_link" %>

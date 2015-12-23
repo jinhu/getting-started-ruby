@@ -14,7 +14,7 @@
 class ItemsController < ApplicationController
 
   PER_PAGE = 30
-  @item_type=Game
+  @item_type=Item
 
   def index
     @items, @more = @item_type.query limit: PER_PAGE, cursor: params[:more]
