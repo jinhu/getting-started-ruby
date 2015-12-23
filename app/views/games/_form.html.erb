@@ -15,16 +15,16 @@
 
 <h3>Book</h3>
 
-<% if @book.errors.any? %>
+<% if @item.errors.any? %>
   <div class="errors">
-    <% @book.errors.full_messages.each do |message| %>
+    <% @item.errors.full_messages.each do |message| %>
       <div class="alert alert-danger"><%= message %></div>
     <% end %>
   </div>
 <% end %>
 
 <!-- [START multipart] -->
-<%= form_for @book, :html => { :multipart => true } do |f| %>
+<%= form_for @item, :html => { :multipart => true } do |f| %>
 <!-- [END multipart] -->
   <div class="form-group">
     <%= f.label :title %>

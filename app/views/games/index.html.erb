@@ -1,34 +1,20 @@
-<%#
-  Copyright 2015, Google, Inc.
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+<h3>Games</h3>
 
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-%>
-
-<h3>Books</h3>
-
-<%= link_to new_book_path, class: "btn btn-success btn-sm" do %>
+<%= link_to new_game_path, class: "btn btn-success btn-sm" do %>
   <i class="glyphicon glyphicon-plus"></i>
-  <span>Add Book</span>
+  <span>Add Game</span>
 <% end %>
 
-<% @books.each do |book| %>
+<% @games.each do |game| %>
   <div class="book media">
-    <%= link_to book_path(book) do %>
+    <%= link_to book_path(game) do %>
       <div class="media-left">
-        <img src="<%= book.image_url %>">
+        <img src="<%= game.image_url %>">
       </div>
       <div class="media-body">
-        <h4><%= book.title %></h4>
-        <p><%= book.author %></p>
+        <h4><%= game.title %></h4>
+        <p><%= game.author %></p>
       </div>
     <% end %>
   </div>
@@ -36,6 +22,6 @@
 
 <%= render "pagination_link" %>
 
-<% if @books.none? %>
+<% if @games.none? %>
   <p>No books found.</p>
 <% end %>

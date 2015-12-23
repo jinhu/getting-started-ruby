@@ -13,28 +13,38 @@
 
 class ItemsController < ApplicationController
 
-  PER_PAGE = 10
+  PER_PAGE = 30
+  @item_type=Game
 
   def index
-    @books, @more = items.query limit: PER_PAGE, cursor: params[:more]
+    @items, @more = @item_type.query limit: PER_PAGE, cursor: params[:more]
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json  { render  json: @items }
+    end
   end
 
   def new
-    @book = Book.new
+    @item = @item_type.new
   end
 
   def show
-    @book = Book.find params[:id]
+    @item = @item_type.find params[:id]
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json  { render  json: @item }
+    end
+
   end
 
   def edit
-    @book = Book.find params[:id]
+    @item = @item_type.find params[:id]
   end
 
   def update
-    @book = Book.find params[:id]
+    @item = @item_type.find params[:id]
 
-    if @book.update book_params
+    if @item_type.update item_params
       flash[:success] = "Updated Book"
       redirect_to book_path(@book)
     else
@@ -43,21 +53,21 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @book = Book.find params[:id]
-    @book.destroy
+    @item = @item_type.find params[:id]
+    @item_type.destroy
     redirect_to books_path
   end
 
   before_filter :convert_published_on_to_date
 
   def create
-    @book = Book.new book_params
+    @item = @item_type.new item_params
 
-    @book.creator_id = current_user.id if logged_in?
+    @item.creator_id = current_user.id if logged_in?
 
-    if @book.save
-      flash[:success] = "Added Book"
-      redirect_to book_path(@book)
+    if @item.save
+      flash[:success] = "Added @item_type"
+      redirect_to item_path(@item)
     else
       render :new
     end
@@ -65,14 +75,14 @@ class ItemsController < ApplicationController
 
   private
 
-  def book_params
-    params.require(:book).permit :title, :author, :published_on, :description,
+  def item_params
+    params.require(:item).permit :title, :author, :published_on, :description, :points,
                                  :cover_image
   end
 
   def convert_published_on_to_date
-    if params[:book] && params[:book][:published_on].present?
-      params[:book][:published_on] = Time.parse params[:book][:published_on]
+    if params[:item] && params[:item][:published_on].present?
+      params[:item][:published_on] = Time.parse params[:item][:published_on]
     end
   end
 

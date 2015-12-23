@@ -13,30 +13,30 @@
   limitations under the License.
 %>
 
-<h3>Book</h3>
+<h3>game</h3>
 
 <div class="btn-group">
-  <%= link_to edit_book_path(@book), class: "btn btn-primary btn-sm" do %>
+  <%= link_to edit_game_path(@item), class: "btn btn-primary btn-sm" do %>
     <i class="glyphicon glyphicon-edit"></i>
-    <span>Edit Book</span>
+    <span>Edit game</span>
   <% end %>
-  <%= link_to book_path(@book), class: "btn btn-danger btn-sm", method: :delete do %>
+  <%= link_to game_path(@item), class: "btn btn-danger btn-sm", method: :delete do %>
     <i class="glyphicon glyphicon-trash"></i>
-    <span>Delete Book</span>
+    <span>Delete game</span>
   <% end %>
 </div>
 
-<%# [START book_details] %>
+<%# [START game_details] %>
 <div class="media">
   <!-- [START cover] -->
   <div class="media-left">
-    <img src="<%= @book.image_url %>">
+    <img src="<%= @item.image_url %>">
   </div>
   <!-- [END cover] -->
   <div class="media-body">
-    <h4><%= @book.title %> | &nbsp; <small><%= @book.published_on %></small></h4>
-    <h5>By <%= @book.author || "unknown" %></h5>
-    <p><%= @book.description %></p>
+    <h4><%= @item.title %> | &nbsp; <small><%= @item.published_on %></small></h4>
+    <h5>By <%= @item.author || "unknown" %></h5>
+    <p><%= @item.description %></p>
   </div>
 </div>
-<%# [END book_details] %>
+<%# [END game_details] %>

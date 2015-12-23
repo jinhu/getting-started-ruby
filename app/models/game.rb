@@ -31,11 +31,11 @@ class Game
     )
   end
 
-  # Query Book entities from Cloud Datastore.
+  # Query Game entities from Cloud Datastore.
   #
-  # returns an array of Book query results and a cursor
+  # returns an array of Game query results and a cursor
   # that can be used to query for additional results.
-  # [START books_by_creator]
+  # [START games_by_creator]
   def self.query options = {}
     query = Gcloud::Datastore::Query.new
     query.kind "Game"
@@ -45,28 +45,28 @@ class Game
     if options[:creator_id]
       query.where "creator_id", "=", options[:creator_id]
     end
-    # [END books_by_creator]
+    # [END games_by_creator]
 
     results = dataset.run query
-    books   = results.map {|entity| Book.from_entity entity }
+    games   = results.map {|entity| Game.from_entity entity }
 
     if options[:limit] && results.size == options[:limit]
       next_cursor = results.cursor
     end
 
-    return books, next_cursor
+    return games, next_cursor
   end
 
   def self.from_entity entity
-    book = Book.new
-    book.id = entity.key.id
+    game = Game.new
+    game.id = entity.key.id
     entity.properties.to_hash.each do |name, value|
-      book.send "#{name}=", value
+      game.send "#{name}=", value
     end
-    book
+    game
   end
 
-  # Lookup Book by ID.  Returns Book or nil.
+  # Lookup Game by ID.  Returns Game or nil.
   def self.find id
     query    = Gcloud::Datastore::Key.new "Game", id.to_i
     entities = dataset.lookup query
@@ -76,7 +76,7 @@ class Game
 
   def to_entity
     entity = Gcloud::Datastore::Entity.new
-    entity.key = Gcloud::Datastore::Key.new "Book", id
+    entity.key = Gcloud::Datastore::Key.new "Game", id
     entity["title"]        = title
     entity["author"]       = author               if author.present?
     entity["points"]       = points               if points.present?
@@ -97,7 +97,7 @@ class Game
   def destroy
     delete_image if image_url.present?
 
-    Book.dataset.delete Gcloud::Datastore::Key.new "Game", id
+    Game.dataset.delete Gcloud::Datastore::Key.new "Game", id
   end
 
   def persisted?
@@ -115,7 +115,7 @@ class Game
 
     self.image_url = image.public_url
 
-    Book.dataset.save to_entity
+    Game.dataset.save to_entity
   end
 
   def delete_image
@@ -143,12 +143,12 @@ class Game
   def save
     if valid?
       entity = to_entity
-      Book.dataset.save entity
+      Game.dataset.save entity
 
       # TODO separate create and save ...
       unless persisted? # just saved
         self.id = entity.key.id
-        lookup_book_details
+        lookup_game_details
       end
      
       self.id = entity.key.id
@@ -161,9 +161,9 @@ class Game
 
   private
 
-  def lookup_book_details
+  def lookup_game_details
     if [author, description, published_on, image_url].any? {|attr| attr.blank? }
-      LookupBookDetailsJob.perform_later self
+      LookupGameDetailsJob.perform_later self
     end
   end
   # [END enqueue_job]
