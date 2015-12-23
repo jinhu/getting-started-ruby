@@ -54,7 +54,7 @@ Rails.application.configure do
   # Use a different logger for distributed setups.
   # [START logging]
   if Dir.exist? "/var/log/app_engine/custom_logs"
-    config.logger = ActiveSupport::TaggedLogging.new Logger.new("/var/log/app_engine/custom_logs/application.log")
+    config.logger = ActiveSupport::TaggedLogging.new Logger.new("/var/log/app_engine/custom_logs/items.log")
   end
   # [END logging]
 

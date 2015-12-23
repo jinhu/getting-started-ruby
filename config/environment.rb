@@ -11,8 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Load the Rails application.
+# Load the Rails items.
 require File.expand_path("../application", __FILE__)
 
-# Initialize the Rails application.
+# Initialize the Rails items.
 Rails.application.initialize!

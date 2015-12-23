@@ -80,7 +80,7 @@ class LookupGameDetailsJob < ActiveJob::Base
         raise "GameService list_volumes ERROR!"
       end
 
-      volumes = results.items
+      volumes = results.application
 
       best_match = volumes.find {|volume|
         info = volume.volume_info

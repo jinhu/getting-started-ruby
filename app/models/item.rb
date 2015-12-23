@@ -6,7 +6,7 @@ class Item
   include ActiveModel::Validations
 
   attr_accessor :id, :title, :author, :points, :published_on, :description, :image_url,
-                :cover_image, :creator_id, :timestamp, :bytes, :count, :entity_bytes,:builtin_index_count,:kind_name,:builtin_index_bytes
+                :cover_image, :creator_id, :kind
 
 
   validates :title, presence: true
@@ -47,7 +47,8 @@ class Item
 
   def self.from_entity entity
     item = Item.new
-    if(["Book", "Game", "Serie", "Movie", "Activity"].include?entity.key.kind)
+    if(["Book", "Game", "Serie", "Movie", "Activity", "Item"].include?entity.key.kind)
+      kind = entity.key.kind
       item.id = entity.key.id
       entity.properties.to_hash.each do |name, value|
         item.send "#{name}=", value
@@ -58,7 +59,7 @@ class Item
 
   # Lookup Item by ID.  Returns Item or nil.
   def self.find id
-    query    = Gcloud::Datastore::Key.new "Item", id.to_i
+    query    = Gcloud::Datastore::Key.new nil, id.to_i
     entities = dataset.lookup query
 
     from_entity entities.first if entities.any?
@@ -66,7 +67,7 @@ class Item
 
   def to_entity
     entity = Gcloud::Datastore::Entity.new
-    entity.key = Gcloud::Datastore::Key.new "Item", id
+    entity.key = Gcloud::Datastore::Key.new kind, id
     entity["title"]        = title
     entity["author"]       = author               if author.present?
     entity["points"]       = points               if points.present?

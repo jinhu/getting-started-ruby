@@ -1,0 +1,31 @@
+
+<h3>Games</h3>
+
+<%= link_to new_game_path, class: "btn btn-success btn-sm" do %>
+  <i class="glyphicon glyphicon-plus"></i>
+  <span>Add Game</span>
+<% end %>
+<table>
+<% @items.each do |item| %>
+    <%if item.id %>
+  <tr class="book media">
+    <%= link_to series_path(item) do %>
+      <td class="media-left">
+        <img src="<%= item.image_url %>" height="100" width="100">
+      </td>
+      <div class="media-body">
+        <td><%= item.title %></td>
+        <td><%= item.author %></td>
+        <td><%=item.points %></td>
+        <td><%=item.kind %></td>
+      </div>
+    <% end %>
+  </tr>
+    <% end %>
+<% end %>
+</table>
+<%= render "pagination_link" %>
+
+<% if @items.none? %>
+  <p>No books found.</p>
+<% end %>
