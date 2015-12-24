@@ -7,7 +7,12 @@
 			<div on-dblclick="_editAction">
 				<input type="checkbox" class="toggle"
 							 checked="{{item.completed::change}}">
-				<label>{{item.title}}</label>
+				<label>
+					<img src="/sensei_wu.png" height="50"></img>
+						<span>{{item.title}}</span>
+					<span>Author</span>
+					<span>100 geekpoints</span>
+				</label>
 				<button class="destroy" on-tap="_destroyAction"></button>
 			</div>
 		</template>

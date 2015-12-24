@@ -38,7 +38,7 @@ class Book
   # [START books_by_creator]
   def self.query options = {}
     query = Gcloud::Datastore::Query.new
-    query.kind "Book"
+    #query.kind "Book"
     query.limit options[:limit]   if options[:limit]
     query.cursor options[:cursor] if options[:cursor]
 
@@ -94,8 +94,10 @@ class Book
   end
 
   def destroy
-    delete_image if image_url.present?
-
+    begin
+      delete_image if image_url.present?
+    rescue Exception => e
+    end
     Book.dataset.delete Gcloud::Datastore::Key.new "Book", id
   end
 
