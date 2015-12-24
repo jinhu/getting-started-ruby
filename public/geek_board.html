@@ -30,78 +30,98 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </head>
 <body unresolved>
 <h1>Video Feed</h1>
-<my-element class="fit"></my-element>
+<geek-board class="fit"></geek-board>
 
 
-<dom-module id="my-element">
+<dom-module id="geek-board">
 	<template>
-		<div class="horizontal layout" style="height:100%">
-			<div class="flex-1" style="background-color:red">
-				Left Pane
+		<div class="horizontal layout">
+			<div class="flex-1" style="background: aliceblue">
+				<span>To do</span>
+
+				<template is="dom-bind" id="item-app">
+					<iron-ajax auto
+							   url="http://localhost:3000/items"
+							   params=''
+							   handle-as="json"
+							   last-response="{{items}}"></iron-ajax>
+
+					<template is="dom-repeat" items="[[items]]">
+						<div class="horizontal-section" style="background: ghostwhite">
+							<h2><a href="[[url(item.id.videoId)]]" target="_blank">[[item.title]]</a></h2>
+							<iron-image src="[[item.image_url]]" width="280" height="200" sizing="cover" preload fade></iron-image>
+							<p>[[item.description]]</p>
+							<p>by: [[item.author]]</p>
+							<p>
+								Geek points: [[item.points]]
+							</p>
+						</div>
+					</template>
+
+				</template>
 			</div>
-			<div class="flex-1" style="background-color:green">
-				Content
+			<div class="flex-1" style="background-color:white">
+				<span>In progress</span>
+				<template is="dom-bind" id="item-app">
+					<iron-ajax auto
+							   url="http://localhost:3000/items"
+							   params=''
+							   handle-as="json"
+							   last-response="{{items}}"></iron-ajax>
+
+					<template is="dom-repeat" items="[[items]]">
+						<div class="horizontal-section" style="background: ghostwhite">
+							<h2><a href="[[url(item.id.videoId)]]" target="_blank">[[item.title]]</a></h2>
+							<iron-image src="[[item.image_url]]" width="280" height="200" sizing="cover" preload fade></iron-image>
+							<p>[[item.description]]</p>
+							<p>by: [[item.author]]</p>
+							<p>
+								Geek points: [[item.points]]
+							</p>
+						</div>
+					</template>
+					</template>
 			</div>
 			<div class="flex-1" style="background-color:red">
-				Left Pane
+				<span>Done</span>
+
+
+				 	<template is="dom-bind" id="app">
+						<iron-ajax auto
+								   url="https://www.googleapis.com/youtube/v3/search"
+								   params='{"part":"snippet", "q":"polymer", "key": "AIzaSyAuecFZ9xJXbGDkQYWBmYrtzOGJD-iDIgI", "type": "video"}'
+								   handle-as="json"
+								   last-response="{{ajaxResponse}}"></iron-ajax>
+
+						<template is="dom-repeat" items="[[ajaxResponse.items]]">
+							<div class="horizontal-section">
+								<h2><a href="[[url(item.id.videoId)]]" target="_blank">[[item.snippet.title]]</a></h2>
+								<iron-image src="[[item.snippet.thumbnails.high.url]]" width="256" height="256" sizing="cover" preload fade></iron-image>
+								<p>[[item.snippet.description]]</p>
+							</div>
+						</template>
+
+					</template>
+				</div>
+
+				<script>
+					var app = document.querySelector('#app');
+					app.url = function (videoId) {
+						return 'https://www.youtube.com/watch?v=' + videoId;
+					};
+				</script>
 			</div>
 		</div>
 	</template>
 
 	<script>
 		Polymer({
-			is: "my-element"
+			is: "geek-board"
 		});
 	</script>
 </dom-module>
 
-<template is="dom-bind" id="item-app">
-	<iron-ajax auto
-			   url="http://localhost:3000/items"
-			   params=''
-			   handle-as="json"
-			   last-response="{{items}}"></iron-ajax>
-
-	<template is="dom-repeat" items="[[items]]">
-		<div class="horizontal-section">
-			<h2><a href="[[url(item.id.videoId)]]" target="_blank">[[item.title]]</a></h2>
-			<iron-image src="[[item.image_url]]" width="280" height="200" sizing="cover" preload fade></iron-image>
-			<p>[[item.description]]</p>
-			<p>by: [[item.author]]</p>
-			<p>
-			Geek points: [[item.points]]
-			</p>
-		</div>
-	</template>
-
-</template>
 
 
-
-<div class="horizontal-section-container">
-	<template is="dom-bind" id="app">
-		<iron-ajax auto
-				   url="https://www.googleapis.com/youtube/v3/search"
-				   params='{"part":"snippet", "q":"polymer", "key": "AIzaSyAuecFZ9xJXbGDkQYWBmYrtzOGJD-iDIgI", "type": "video"}'
-				   handle-as="json"
-				   last-response="{{ajaxResponse}}"></iron-ajax>
-
-		<template is="dom-repeat" items="[[ajaxResponse.items]]">
-			<div class="horizontal-section">
-				<h2><a href="[[url(item.id.videoId)]]" target="_blank">[[item.snippet.title]]</a></h2>
-				<iron-image src="[[item.snippet.thumbnails.high.url]]" width="256" height="256" sizing="cover" preload fade></iron-image>
-				<p>[[item.snippet.description]]</p>
-			</div>
-		</template>
-
-	</template>
-</div>
-
-<script>
-	var app = document.querySelector('#app');
-	app.url = function (videoId) {
-		return 'https://www.youtube.com/watch?v=' + videoId;
-	};
-</script>
 </body>
 </html>
