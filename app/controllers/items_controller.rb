@@ -12,9 +12,14 @@
 # limitations under the License.
 
 class ItemsController < ApplicationController
-
+  layout 'polymer'
   PER_PAGE = 30
-  @item_type=Item
+
+  def initialize
+    super
+    @item_type=Item
+
+  end
 
   def index
     @items, @more = @item_type.query limit: PER_PAGE, cursor: params[:more]
