@@ -21,3 +21,4 @@ config/settings.yml
 /config/database.yml
 /gcd_dataset_directory/
 .idea
+.DS_Store
