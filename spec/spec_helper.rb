@@ -40,7 +40,10 @@ RSpec.configure do |config|
   end
 
   config.before :each do
-    Book.delete_all
+begin
+  Book.delete_all
+rescue Exception=>e
+end
     Fog::Mock.reset
     FogStorage.directories.create key: "testbucket", acl: "public-read"
   end

@@ -15,10 +15,7 @@
 class ApplicationController < ActionController::Base
   # before_action :authenticate
   #
-  # def authenticate
-  #   redirect_to :login unless User.find_by_provider_and_uid(auth["provider"], auth["uid"])
-  # end
-  helper_method :logged_in?, :current_user
+   helper_method :logged_in?, :current_user
 
   def logged_in?
     session.has_key? :user

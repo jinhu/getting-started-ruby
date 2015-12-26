@@ -13,7 +13,7 @@
 
 Rails.application.routes.draw do
 
-  resources :books, :games, :series, :movies, :activities, :dashboard, :items
+  resources :movies, :items, :geek_items
 
   # [START login]
   get "/login", to: redirect("/auth/google_oauth2")

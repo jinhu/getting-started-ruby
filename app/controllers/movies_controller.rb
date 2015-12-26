@@ -13,6 +13,7 @@
 
 class MoviesController < ItemsController
   def initialize
+    super
     @item_type=Movie
   end
 end

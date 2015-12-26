@@ -11,6 +11,8 @@
 		"iron-ajax": "PolymerElements/iron-ajax#^1.0.4",
 		"iron-image": "PolymerElements/iron-image#^1.0.4",
 		"paper-styles": "PolymerElements/paper-styles#^1.0.4",
-		"iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.4"
+		"iron-flex-layout": "PolymerElements/iron-flex-layout#^1.0.4",
+		"webcomponentsjs": "webcomponents/webcomponentsjs#^ 0.7.20"
+
 	}
 }

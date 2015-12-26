@@ -1,7 +1,7 @@
 # [START lookup_games]
 require "google/api_client"
 
-class LookupGameDetailsJob < ActiveJob::Base
+class LookupItemDetailsJob < ActiveJob::Base
   queue_as :default
 
   def perform game

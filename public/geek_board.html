@@ -34,7 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<div class="flex-1" style="margin: 3px; padding: 3px">
 	<div class="horizontal-section-container">
 		<span>To do</span>
-		<template is="dom-bind" id="to-do">
+		<template is="dom-bind" id="to_do">
 			<iron-ajax auto
 					   url="http://localhost:3000/items"
 					   params='{"state":"todo"}'
@@ -42,13 +42,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					   last-response="{{items}}"></iron-ajax>
 
 			<template is="dom-repeat" items="[[items]]">
+				<template is="dom-if" if="{{item.title}}">
 				<div class="horizontal-section">
-					<h2><a href="[[url(item.id.videoId)]]" target="_blank">[[item.title]]</a></h2>
+					<h2>[[item.rank]]<a href="[[item.link]]" target="_blank">[[item.title]]</a></h2>
 					<iron-image src="[[item.image_url]]" width="280" height="200" sizing="cover" preload fade></iron-image>
 					<p>[[item.description]]</p>
 					<p>by: [[item.author]]</p>
-					<p>Geek points: [[item.points]]</p>
+					<p>Geek points: [[item.points ]]</p>
 				</div>
+				</template>
 			</template>
 
 		</template>
@@ -57,21 +59,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<div class="flex-1" style="margin: 3px; padding: 3px">
 		<div class="horizontal-section-container">
 			<span>In progress</span>
-			<template is="dom-bind" id="in-progress">
+			<template is="dom-bind" id="in_progress">
 				<iron-ajax auto
-						   url="http://localhost:3000/items"
-						   params='{"state":"buzy"}'
+						   url="http://localhost:3000/geek_items"
+						   params='{"status":"in_progress"}'
 						   handle-as="json"
 						   last-response="{{items}}"></iron-ajax>
 
 				<template is="dom-repeat" items="[[items]]">
-					<div class="horizontal-section">
-						<h2><a href="[[url(item.id.videoId)]]" target="_blank">[[item.title]]</a></h2>
-						<iron-image src="[[item.image_url]]" width="280" height="200" sizing="cover" preload fade></iron-image>
-						<p>[[item.description]]</p>
-						<p>by: [[item.author]]</p>
-						<p>Geek points: [[item.points]]</p>
-					</div>
+					<template is="dom-if" if="{{item.title}}">
+						<div class="horizontal-section">
+							<h2>[[item.rank]]<a href="[[item.link]]" target="_blank">[[item.title]]</a></h2>
+							<iron-image src="[[item.image_url]]" width="280" height="200" sizing="cover" preload fade></iron-image>
+							<p>[[item.description]]</p>
+							<p>by: [[item.author]]</p>
+							<p>Geek points: [[item.points ]]</p>
+						</div>
+					</template>
 				</template>
 
 			</template>
@@ -83,19 +87,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			<span>Done</span>
 			<template is="dom-bind" id="done">
 				<iron-ajax auto
-						   url="http://localhost:3000/items"
-						   params='{"state":"done"}'
+						   url="http://localhost:3000/geek_items"
+						   params='{"status":"done"}'
 						   handle-as="json"
 						   last-response="{{items}}"></iron-ajax>
 
 				<template is="dom-repeat" items="[[items]]">
-					<div class="horizontal-section">
-						<h2><a href="[[url(item.id.videoId)]]" target="_blank">[[item.title]]</a></h2>
-						<iron-image src="[[item.image_url]]" width="280" height="200" sizing="cover" preload fade></iron-image>
-						<p>[[item.description]]</p>
-						<p>by: [[item.author]]</p>
-						<p>Geek points: [[item.points]]</p>
-					</div>
+					<template is="dom-if" if="{{item.title}}">
+						<div class="horizontal-section">
+							<h2>[[item.rank]]<a href="[[item.link]]" target="_blank">[[item.title]]</a></h2>
+							<iron-image src="[[item.image_url]]" width="280" height="200" sizing="cover" preload fade></iron-image>
+							<p>[[item.description]]</p>
+							<p>by: [[item.author]]</p>
+							<p>Geek points: [[item.points ]]</p>
+						</div>
+					</template>
 				</template>
 
 			</template>

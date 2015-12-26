@@ -1,0 +1,21 @@
+
+<h3>Geek items</h3>
+
+<%= link_to new_geek_item_path, class: "btn btn-success btn-sm" do %>
+  <i class="glyphicon glyphicon-plus"></i>
+  <span>Add Geek item</span>
+<% end %>
+
+<% @items.each do |item| %>
+    <div>
+    <%= item.user_id %>
+    <%= item.item_id %>
+    <%=item.status %>
+    </div>
+<% end %>
+
+<%= render "pagination_link" %>
+
+<% if @items.none? %>
+  <p>No books found.</p>
+<% end %>

@@ -1,14 +1,14 @@
 
 <h3>Geek items</h3>
 
-<%= link_to new_game_path, class: "btn btn-success btn-sm" do %>
+<%= link_to new_item_path, class: "btn btn-success btn-sm" do %>
   <i class="glyphicon glyphicon-plus"></i>
   <span>Add Items</span>
 <% end %>
 <% @items.each do |item| %>
     <%if item.id %>
     <li is="td-item" item="{{item}}">
-        <%= link_to series_path(item) do %>
+        <%= link_to item_path(item) do %>
         <img src="<%= item.image_url %>" height="100" width="100">
       <div class="media-body">
         <td><%= item.title %></td>

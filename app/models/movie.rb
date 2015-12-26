@@ -2,4 +2,4 @@
 
 class Movie < Item
 
-  end
+end

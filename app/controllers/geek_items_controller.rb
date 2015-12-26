@@ -11,37 +11,47 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-class ItemsController < ApplicationController
-  #layout 'polymer'
-  PER_PAGE = 30
+class GeekItemsController < ApplicationController
+  before_action :authenticate
+  def authenticate
+    redirect_to :login if not current_user
+  end
+
+  PER_PAGE = 10
 
   def initialize
     super
-    @item_type = Item
+    @item_type=GeekItem
+
   end
 
   def index
-    options = {
-        limit: PER_PAGE,
-        cursor: params[:more],
-    }
-    options[:kind]= @item_type.name if @item_type != Item
-    @items, @more = @item_type.query  options
+    status = params[:status] || "to_do"
+    @items, @more = @item_type.query limit: PER_PAGE, cursor: params[:more], status: status, user_id: current_user.id
     respond_to do |format|
       format.html # show.html.erb
       format.json  { render  json: @items }
     end
   end
 
+
   def new
     @item = @item_type.new
   end
 
   def show
+    if params[:id]=="create_all"
+      Item.all.each do |item|
+        GeekItem.create user_id: current_user.id, status: "to_do", item_id: item.id
+
+      end
+      render text: "done"
+    else
     @item = @item_type.find params[:id]
     respond_to do |format|
       format.html # show.html.erb
       format.json  { render  json: @item }
+    end
     end
 
   end
@@ -72,21 +82,21 @@ class ItemsController < ApplicationController
   def create
     @item = @item_type.new item_params
 
-    @item.creator_id = current_user.id if logged_in?
+    @item.user_id = current_user.id
 
     if @item.save
       flash[:success] = "Added @item_type"
-      redirect_to item_path(@item)
+      redirect_to geek_item_path(@item)
     else
       render :new
     end
   end
 
+
   private
 
   def item_params
-    params.require(:item).permit :title, :author, :published_on, :description, :points,
-                                 :cover_image
+    params.require(:geek_item).permit :item_id, :status, :kind, :description
   end
 
   def convert_published_on_to_date

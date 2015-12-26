@@ -13,10 +13,4 @@
   limitations under the License.
 %>
 
-<% if @more %>
-  <nav>
-    <ul class="pager">
-      <li><%= link_to "More", items_path(more: @more) %></li>
-    </ul>
-  </nav>
-<% end %>
+<%= render partial: "form" %>

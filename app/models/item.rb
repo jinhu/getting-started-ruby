@@ -4,9 +4,12 @@ require "gcloud/datastore"
 class Item
   include ActiveModel::Model
   include ActiveModel::Validations
-
-  attr_accessor :id, :title, :author, :points, :published_on, :description, :image_url,
-                :cover_image, :creator_id, :kind
+  include DatastoreExtensions
+  FIELDS = [:id, :title, :author, :points, :published_on, :description, :image_url,
+            :cover_image, :creator_id, :kind, :rank, :link, :confidence]
+  FIELDS.each do |field|
+    attr_accessor field
+  end
 
 
   validates :title, presence: true
@@ -29,11 +32,6 @@ class Item
     query.kind options[:kind] if options[:kind]
     query.limit options[:limit]   if options[:limit]
     query.cursor options[:cursor] if options[:cursor]
-
-    if options[:creator_id]
-      query.where "creator_id", "=", options[:creator_id]
-    end
-    # [END items_by_creator]
 
     results = dataset.run query
     items   = results.map {|entity| Item.from_entity entity }
@@ -59,7 +57,7 @@ class Item
 
   # Lookup Item by ID.  Returns Item or nil.
   def self.find id
-    query    = Gcloud::Datastore::Key.new nil, id.to_i
+    query    = Gcloud::Datastore::Key.new "Movie", id.to_i
     entities = dataset.lookup query
 
     from_entity entities.first if entities.any?
@@ -68,13 +66,15 @@ class Item
   def to_entity
     entity = Gcloud::Datastore::Entity.new
     entity.key = Gcloud::Datastore::Key.new kind, id
-    entity["title"]        = title
-    entity["author"]       = author               if author.present?
-    entity["points"]       = points               if points.present?
-    entity["published_on"] = published_on.to_time if published_on.present?
-    entity["description"]  = description          if description.present?
-    entity["image_url"]    = image_url            if image_url.present?
-    entity["creator_id"]   = creator_id           if creator_id.present?
+    FIELDS.each do |field|
+      entity[field.to_s]        = self.send(field).to_s if self.send(field).present?
+    end
+    # entity["author"]       = author               if author.present?
+    # entity["points"]       = points               if points.present?
+    # entity["published_on"] = published_on.to_time if published_on.present?
+    # entity["description"]  = description          if description.present?
+    # entity["image_url"]    = image_url            if image_url.present?
+    # entity["creator_id"]   = creator_id           if creator_id.present?
     entity
   end
 
