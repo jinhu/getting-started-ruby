@@ -16,10 +16,10 @@ module DatastoreExtensions
 
   module ClassMethods
 
-    def all
+    def all kind='Item'
       items = []
 
-      query = Gcloud::Datastore::Query.new#.kind  self.class.name
+      query = Gcloud::Datastore::Query.new.kind  kind
 
       loop do
         results = dataset.run query

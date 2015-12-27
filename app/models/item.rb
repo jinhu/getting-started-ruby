@@ -57,7 +57,7 @@ class Item
 
   # Lookup Item by ID.  Returns Item or nil.
   def self.find id
-    query    = Gcloud::Datastore::Key.new "Movie", id.to_i
+    query    = Gcloud::Datastore::Key.new "Game", id.to_i
     entities = dataset.lookup query
 
     from_entity entities.first if entities.any?

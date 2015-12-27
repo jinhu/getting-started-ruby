@@ -41,11 +41,18 @@ class GeekItemsController < ApplicationController
 
   def show
     if params[:id]=="create_all"
-      Item.all.each do |item|
+      Item.all('Game').each do |item|
         GeekItem.create user_id: current_user.id, status: "to_do", item_id: item.id
 
       end
       render text: "done"
+    elsif params[:status]
+      @item = @item_type.find params[:id]
+      @item.status =params[:status].strip
+      @item.save
+      format.html # show.html.erb
+      format.json  { render  json: @item }
+
     else
     @item = @item_type.find params[:id]
     respond_to do |format|
