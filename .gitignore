@@ -22,3 +22,6 @@ config/settings.yml
 /gcd_dataset_directory/
 .idea
 .DS_Store
+public-spike
+public
+wishing-djinn
