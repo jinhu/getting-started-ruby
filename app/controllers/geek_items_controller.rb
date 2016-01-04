@@ -12,9 +12,10 @@
 # limitations under the License.
 
 class GeekItemsController < ApplicationController
-  before_action :authenticate
+
+  before_action :authenticate if
   def authenticate
-    redirect_to :login if not current_user
+    redirect_to :login if not current_user && request.method != "OPTIONS"
   end
 
   PER_PAGE = 10
@@ -50,9 +51,10 @@ class GeekItemsController < ApplicationController
       @item = @item_type.find params[:id]
       @item.status =params[:status].strip
       @item.save
-      format.html # show.html.erb
-      format.json  { render  json: @item }
-
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json  { render  json: @item }
+      end
     else
     @item = @item_type.find params[:id]
     respond_to do |format|

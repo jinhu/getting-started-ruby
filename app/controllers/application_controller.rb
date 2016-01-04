@@ -1,21 +1,26 @@
-# Copyright 2015, Google, Inc.
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# [START helper_methods]
 class ApplicationController < ActionController::Base
-  # before_action :authenticate
-  #
-   helper_method :logged_in?, :current_user
+
+
+  before_action :add_cors_headers
+
+  helper_method :logged_in?, :current_user
+
+  def add_cors_headers
+    origin = request.headers["Origin"]
+    unless (not origin.nil?) and (origin == "http://localhost" or origin.starts_with? "http://localhost:")
+      origin = "https://your.production-site.org"
+    end
+    headers['Access-Control-Allow-Origin'] = origin
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS, PUT, DELETE'
+    allow_headers = request.headers["Access-Control-Request-Headers"]
+    if allow_headers.nil?
+      #shouldn't happen, but better be safe
+      allow_headers = 'Origin, Authorization, Accept, Content-Type'
+    end
+    headers['Access-Control-Allow-Headers'] = allow_headers
+    headers['Access-Control-Allow-Credentials'] = 'true'
+    headers['Access-Control-Max-Age'] = '1728000'
+  end
 
   def logged_in?
     session.has_key? :user
@@ -24,9 +29,7 @@ class ApplicationController < ActionController::Base
   def current_user
     Marshal.load session[:user] if logged_in?
   end
-# [END helper_methods]
 
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
 end

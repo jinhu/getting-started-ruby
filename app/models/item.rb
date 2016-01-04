@@ -1,11 +1,10 @@
-
 require "gcloud/datastore"
 
 class Item
   include ActiveModel::Model
   include ActiveModel::Validations
   include DatastoreExtensions
-  FIELDS = [:id, :title, :author, :points, :published_on, :description, :image_url,
+  FIELDS = [:id, :title, :publisher, :published_on, :genre, :platform, :year, :points, :author, :description, :image_url,
             :cover_image, :creator_id, :kind, :rank, :link, :confidence]
   FIELDS.each do |field|
     attr_accessor field
@@ -136,14 +135,14 @@ class Item
       entity = to_entity
       Item.dataset.save entity
 
-      # TODO separate create and save ...
-      unless persisted? # just saved
-        self.id = entity.key.id
-        lookup_item_details
-      end
-     
-      self.id = entity.key.id
-      update_image if cover_image.present?
+      # # TODO separate create and save ...
+      # unless persisted? # just saved
+      #   self.id = entity.key.id
+      #   lookup_item_details
+      # end
+      #
+      # self.id = entity.key.id
+      # update_image if cover_image.present?
       true
     else
       false
@@ -152,10 +151,10 @@ class Item
 
   private
 
-  def lookup_item_details
-    if [author, description, published_on, image_url].any? {|attr| attr.blank? }
-      LookupItemDetailsJob.perform_later self
-    end
-  end
+  # def lookup_item_details
+  #   if [author, description, published_on, image_url].any? {|attr| attr.blank? }
+  #     LookupItemDetailsJob.perform_later self
+  #   end
+  # end
   # [END enqueue_job]
 end
